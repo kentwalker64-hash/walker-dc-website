@@ -7,7 +7,7 @@ content:
   - name: website
     label: Website Pages
     type: collection
-    path: .
+    path: content
     view:
       fields: [title]
     fields:
