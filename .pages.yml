@@ -1,0 +1,19 @@
+
+media:
+  input: media
+  output: /media
+
+content:
+  - name: website
+    label: Website Pages
+    type: collection
+    path: .
+    view:
+      fields: [title]
+    fields:
+      - name: title
+        label: Page Title
+        type: string
+      - name: body
+        label: Page Content
+        type: rich-text
