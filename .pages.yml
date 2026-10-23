@@ -4,16 +4,41 @@ media:
   output: /media
 
 content:
-  - name: website
-    label: Website Pages
-    type: collection
-    path: content
-    view:
-      fields: [title]
+  - name: site
+    label: Edit Walker DC Website
+    type: file
+    path: content/site.json
     fields:
-      - name: title
-        label: Page Title
+      - name: hero_headline
+        label: Homepage Headline
         type: string
-      - name: body
-        label: Page Content
-        type: rich-text
+      - name: hero_subheadline
+        label: Homepage Description
+        type: text
+      - name: hero_image
+        label: Homepage Picture
+        type: image
+      - name: about_heading
+        label: About Us Heading
+        type: string
+      - name: about_intro
+        label: About Walker DC
+        type: text
+      - name: services_heading
+        label: Services Heading
+        type: string
+      - name: experience_heading
+        label: VA Experience Heading
+        type: string
+      - name: leadership_heading
+        label: Leadership Heading
+        type: string
+      - name: leadership_bio
+        label: Kent Walker Biography
+        type: text
+      - name: leadership_image
+        label: Leadership Photograph
+        type: image
+      - name: contact_email
+        label: Contact Email
+        type: string
