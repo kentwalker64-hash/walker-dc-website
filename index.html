@@ -43,7 +43,97 @@ function parseRows(text){return String(text||'').split(/\r?\n/).map(line=>{const
 function cell(row,value){const el=document.createElement('td');el.textContent=value;row.appendChild(el)}
 function table(data,key){const rows=parseRows(data[key]);const body=document.getElementById(key==='va_planning_projects'?'va-planning-rows':'va-accepted-rows');const foot=document.getElementById(key==='va_planning_projects'?'va-planning-total':'va-accepted-total');body.replaceChildren();foot.replaceChildren();let area=0,value=0;for(const item of rows){const tr=document.createElement('tr');cell(tr,item.name);cell(tr,formatNumber(item.sf));cell(tr,money(item.tcv));body.appendChild(tr);area+=item.sf;value+=item.tcv}const tr=document.createElement('tr');cell(tr,'TOTAL');cell(tr,formatNumber(area));cell(tr,money(value));foot.appendChild(tr);return {area,value}}
 function render(data){const a=table(data,'va_planning_projects'),b=table(data,'va_accepted_projects');document.getElementById('va-grand-area').textContent=formatNumber(a.area+b.area);document.getElementById('va-grand-value').textContent=money(a.value+b.value);document.getElementById('va-projects-note').textContent=data.va_projects_note||''}
-render(fallback);
-fetch('./content/site.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject()).then(data=>render({...fallback,...data})).catch(()=>{});
+
+function formatQualifications() {
+  const el = document.querySelector('[data-cms-text="credential_1_description"]');
+  if (!el) return;
+
+  const lines = el.textContent.split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean);
+
+  el.replaceChildren();
+
+  lines.forEach(line => {
+    const row = document.createElement('div');
+    row.style.lineHeight = '1.35';
+    row.style.margin = '0';
+
+    const match = line.match(/^([A-Z]{3,4}[- ]\d{3,4})\b/);
+
+    if (match) {
+      const strong = document.createElement('strong');
+      strong.textContent = match[1];
+      row.append(strong, document.createTextNode(line.slice(match[1].length)));
+    } else {
+      row.textContent = line;
+      if (
+        line === 'Professional Certifications' ||
+        line === 'Federal Acquisition & Real Estate Training'
+      ) {
+        row.style.fontWeight = 'bold';
+        row.style.marginTop = '10px';
+        row.style.marginBottom = '4px';
+      }
+    }
+
+    el.appendChild(row);
+  });
+}
+  
+ render(fallback);
+ formatQualifications();
+fetch('./content/site.json',{cache:'no-store'})
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(data=>{
+    render({...fallback,...data});
+    formatQualifications();
+  })
+  .catch(()=>{
+    formatQualifications();
+  });
 })();
+
+function formatQualifications() {
+  const el = document.querySelector(
+    '[data-cms-text="credential_1_description"]'
+  );
+  if (!el) return;
+
+  const lines = el.textContent.split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean);
+
+  el.replaceChildren();
+
+  lines.forEach((line, index) => {
+    const row = document.createElement('div');
+    row.style.margin = '0';
+    row.style.lineHeight = '1.35';
+
+    const match = line.match(
+      /^([A-Z]{3,4}[- ]\d{3,4})\b/
+    );
+
+    if (match) {
+      const strong = document.createElement('strong');
+      strong.textContent = match[1];
+      row.append(strong, document.createTextNode(line.slice(match[1].length)));
+    } else {
+      row.textContent = line;
+      if (
+        line === 'Professional Certifications' ||
+        line === 'Federal Acquisition & Real Estate Training'
+      ) {
+        row.style.fontWeight = 'bold';
+        if (index > 0) row.style.marginTop = '12px';
+      }
+    }
+
+    el.appendChild(row);
+  });
+}
+
+
+  
 </script></body></html>
