@@ -94,45 +94,7 @@ fetch('./content/site.json',{cache:'no-store'})
   });
 })();
 
-function formatQualifications() {
-  const el = document.querySelector(
-    '[data-cms-text="credential_1_description"]'
-  );
-  if (!el) return;
 
-  const lines = el.textContent.split(/\r?\n/)
-    .map(line => line.trim())
-    .filter(Boolean);
-
-  el.replaceChildren();
-
-  lines.forEach((line, index) => {
-    const row = document.createElement('div');
-    row.style.margin = '0';
-    row.style.lineHeight = '1.35';
-
-    const match = line.match(
-      /^([A-Z]{3,4}[- ]\d{3,4})\b/
-    );
-
-    if (match) {
-      const strong = document.createElement('strong');
-      strong.textContent = match[1];
-      row.append(strong, document.createTextNode(line.slice(match[1].length)));
-    } else {
-      row.textContent = line;
-      if (
-        line === 'Professional Certifications' ||
-        line === 'Federal Acquisition & Real Estate Training'
-      ) {
-        row.style.fontWeight = 'bold';
-        if (index > 0) row.style.marginTop = '12px';
-      }
-    }
-
-    el.appendChild(row);
-  });
-}
 
 
   
