@@ -70,7 +70,7 @@
   const data=await response.json();
   document.querySelectorAll('[data-cms-text]').forEach(el=>{const value=data[el.dataset.cmsText];if(typeof value==='string')el.textContent=value;});
   document.querySelectorAll('[data-cms-image]').forEach(el=>{const value=data[el.dataset.cmsImage];if(typeof value==='string'&&value)el.src=value;});
-  document.querySelectorAll('[data-cms-background]').forEach(el=>{const value=data[el.dataset.cmsBackground];if(typeof value==='string'&&value)el.style.backgroundImage=`linear-gradient(90deg,rgba(9,30,48,.94),rgba(9,30,48,.63)),url("${value.replace(/"/g,'%22')}")`;});
+  document.querySelectorAll('[data-cms-background]').forEach(el=>{const value=data[el.dataset.cmsBackground];if(typeof value==='string'&&value)el.style.backgroundImage=`linear-gradient(90deg,rgba(9,30,48,.35) 0%,rgba(9,30,48,.35) 12%,rgba(9,30,48,.88) 23%,rgba(9,30,48,.63) 100%),url("${value.replace(/"/g,'%22')}")`;});
   document.querySelectorAll('[data-cms-email]').forEach(el=>{const value=data[el.dataset.cmsEmail];if(typeof value==='string'&&value){el.href='mailto:'+value+(el.classList.contains('btn')?'?subject=Walker%20DC%20Inquiry':'');if(!el.classList.contains('btn'))el.textContent=value;}});
  } catch(e){console.warn('Site content could not load; showing original content.',e);}
 })();
