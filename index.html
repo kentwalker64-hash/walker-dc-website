@@ -13,8 +13,19 @@
 
 .hero-headline-logo {
   display: block;
-  width: clamp(140px, 16vw, 220px);
+  width: clamp(160px, 18vw, 260px);
+  max-width: 100%;
   height: auto;
+  box-sizing: border-box;
+  padding: 14px;
+  background: #f6f7f7;
+  border-radius: 8px;
+}
+
+@media (min-width: 761px) {
+  .hero-headline-logo {
+    transform: translateY(-32px);
+  }
 }
 
 @media (max-width: 760px) {
